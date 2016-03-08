@@ -5,9 +5,7 @@ public abstract class Entity {
   protected int weight;
 
   //Constructor
-  public Entity(){
-
-  }
+  public Entity(){};
 
   public void eat(Entity ent){
     double addedWeight = Math.ceil(ent.weight / 10);
@@ -32,24 +30,33 @@ public abstract class Entity {
   }
 
   // - Takes in Entity (pass in null if no Entity or override);
-  public void act(Entity ent){
-    if(isDead == false && isSleeping == false){
-      // - Does nothing if isDead.
-      // - Does nothing if isSleeping.
-    } else if(isSleeping == true){
-      // - If isSleeping it has of 50% chance of setting isSleeping to false.
-      // - Logic can decide whether to eat(Entity), sleep() or poop();
+  public void act(){
+    if(isSleeping == true){
+      boolean random = (Math.random() < 0.5);
+      // this.isSleeping = random;
+      // System.out.println("this is random: " + random);
+      if(random == true){
+        this.isSleeping = false;
+        // this.poop();
+      } else {
+        System.out.println("Asleep!");
+      }
     }
-
   }
 
   public static void main(String [] args){
     Dog rover = new Dog("large", false, false, 100);
     Cat kitty = new Cat("small", false, false, 50);
+    Cat stray = new Cat("large", false, false, 50);
     Fish denny = new Fish("small", false, false, 20);
-    Rottweiler rot = new Rottweiler("large", false, false, 200);
+    Rottweiler rot = new Rottweiler("large", false, true, 200);
 
-    System.out.println(rot.size);
+    System.out.println("Current weight: " + rot.weight);
+    System.out.println("Current isSleeping status: " + rot.isSleeping);
+    rot.act();
+    System.out.println("isSleeping status after ACT method: " + rot.isSleeping);
+    rot.eat(kitty);
+    System.out.println("After EAT method: " + rot.weight);
   }
 
 }
